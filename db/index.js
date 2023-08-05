@@ -25,15 +25,7 @@ function start() {
             case "View all employees":
                 viewAllEmployees();
                 break;
-            
-            case "View all employees by department":
-                viewAllEmployeesByDepartment();
-                break;
-            
-            case "View all employees by manager":
-                viewAllEmployeesByManager();
-                break;
-            
+
             case "Add employee":
                 addEmployee();
                 break;
@@ -89,10 +81,67 @@ function viewAllEmployees() {
     });
 }
 
-function viewAllEmployeesByDepartment() {
-    connection.query("SELECT * FROM department", function(err, res) {
-        if (err) throw err;
-        console.table(res);
-        start();
+function addEmployee() {
+    inquirer.prompt([
+        {
+            name: "firstName",
+            type: "input",
+            message: "What is the employee's first name?"
+        },
+        {
+            name: "lastName",
+            type: "input",
+            message: "What is the employee's last name?"
+        },
+        {
+            name: "roleId",
+            type: "input",
+            message: "What is the employee's role ID?"
+        },
+        {
+            name: "managerId",
+            type: "input",
+            message: "What is the employee's manager ID?"
+        }
+    ]).then(function(answer) {
+        connection.query("INSERT INTO employee SET ?", 
+        {
+            first_name: answer.firstName,
+            last_name: answer.lastName,
+            role_id: answer.roleId,
+            manager_id: answer.managerId
+        },
+        function(err) {
+            if (err) throw err;
+            console.log("Employee added successfully!");
+            start();
+        });
     });
 }
+
+function removeEmployee() {
+    inquirer.prompt([
+        {
+            name: "id",
+            type: "input",
+            message: "What is the employee's ID?"
+        }
+    ]).then(function(answer) {
+        connection.query("DELETE FROM employee WHERE ?", 
+        {
+            id: answer.id
+        },
+        function(err) {
+            if (err) throw err;
+            console.log("Employee deleted successfully!");
+            start();
+        });
+    });
+}
+
+
+function quit() {
+    connection.end();
+}
+
+module.exports = start;
