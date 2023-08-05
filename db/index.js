@@ -286,6 +286,62 @@ function removeRole() {
     });
 }
 
+function viewAllDepartments() {
+  connection.query("SELECT * FROM department", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    start();
+  });
+}
+
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        name: "name",
+        type: "input",
+        message: "What is the department's name?",
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        "INSERT INTO department SET ?",
+        {
+          name: answer.name,
+        },
+        function (err) {
+          if (err) throw err;
+          console.log("Department added successfully!");
+          start();
+        }
+      );
+    });
+}
+
+function removeDepartment() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        type: "input",
+        message: "What is the department's ID?",
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        "DELETE FROM department WHERE ?",
+        {
+          id: answer.id,
+        },
+        function (err) {
+          if (err) throw err;
+          console.log("Department deleted successfully!");
+          start();
+        }
+      );
+    });
+}
+
 function quit() {
   connection.end();
 }
