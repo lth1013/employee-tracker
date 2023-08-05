@@ -11,7 +11,7 @@
 | Inquirer | [https://www.npmjs.com/package/inquirer](https://www.npmjs.com/package/inquirer)|
 
 ## Description
-[Video Link](https://drive.google.com/file/d/1Q3Q3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z/view?usp=sharing)
+[Video Link](https://www.youtube.com/watch?v=QiquixSu24o)
 This is a employee tracker that allows you to view, add, and update employees, roles, and departments.
 Here is the User Story :
 ```md
