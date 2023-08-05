@@ -218,6 +218,74 @@ function updateEmployeeManager() {
     });
 }
 
+function viewAllRoles() {
+  connection.query("SELECT * FROM role", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    start();
+  });
+}
+
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        name: "title",
+        type: "input",
+        message: "What is the role's title?",
+      },
+      {
+        name: "salary",
+        type: "input",
+        message: "What is the role's salary?",
+      },
+      {
+        name: "departmentId",
+        type: "input",
+        message: "What is the role's department ID?",
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        "INSERT INTO role SET ?",
+        {
+          title: answer.title,
+          salary: answer.salary,
+          department_id: answer.departmentId,
+        },
+        function (err) {
+          if (err) throw err;
+          console.log("Role added successfully!");
+          start();
+        }
+      );
+    });
+}
+
+function removeRole() {
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        type: "input",
+        message: "What is the role's ID?",
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        "DELETE FROM role WHERE ?",
+        {
+          id: answer.id,
+        },
+        function (err) {
+          if (err) throw err;
+          console.log("Role deleted successfully!");
+          start();
+        }
+      );
+    });
+}
+
 function quit() {
   connection.end();
 }
